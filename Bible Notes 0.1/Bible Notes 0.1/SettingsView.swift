@@ -75,9 +75,6 @@ struct SettingsView: View {
                         Text("1.0")
                             .foregroundStyle(.secondary)
                     }
-                    
-                    Link("Privacy Policy", destination: URL(string: "https://example.com/privacy")!)
-                    Link("Terms of Service", destination: URL(string: "https://example.com/terms")!)
                 }
             }
             .navigationTitle("Settings")

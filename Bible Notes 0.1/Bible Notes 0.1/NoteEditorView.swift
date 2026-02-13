@@ -583,15 +583,11 @@ struct NoteEditorView: View {
 }
 
 #Preview {
-    let container = try! ModelContainer(
-        for: Note.self, Theme.self, Attachment.self,
-        configurations: ModelConfiguration(isStoredInMemoryOnly: true)
-    )
-    let note = Note(title: "Sample Note", content: "This is a sample note.")
+    @Previewable @State var note = Note(title: "Sample Note", content: "This is a sample note.")
     
     return NavigationStack {
         NoteEditorView(note: note)
     }
-    .modelContainer(container)
+    .modelContainer(for: [Note.self, Theme.self, Attachment.self], inMemory: true)
 }
 
