@@ -23,7 +23,18 @@ struct BibleNotesApp: App {
         } catch {
             // Fallback to local-only storage
             let schema = Schema([Note.self, Theme.self, Attachment.self])
-            container = try! ModelContainer(for: schema)
+            do {
+                container = try ModelContainer(for: schema)
+            } catch {
+                // Final fallback to in-memory storage
+                let config = ModelConfiguration(isStoredInMemoryOnly: true)
+                do {
+                    container = try ModelContainer(for: schema, configurations: [config])
+                } catch {
+                    // This should never happen, but if it does, we cannot continue
+                    fatalError("Failed to initialize ModelContainer. The app cannot continue. Please reinstall the app. Error: \(error.localizedDescription)")
+                }
+            }
         }
     }
     
